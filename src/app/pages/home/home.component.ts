@@ -86,25 +86,27 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.getMaintenances();
       this.workerForm.reset();
-    }, 500);
+    }, 2000);
   }
   updateForm(){
-  this.id = this.idRoute.snapshot.paramMap.get("id");
-  setTimeout(() => {
-    if(this.id !== null){
-      this.modal_title = "Update Worker";
-      console.log("1", this.id);
-      this.maintenanceSVC.getMaintenance(this.id).subscribe(data =>{
-        console.log("2", this.id);
-        this.workerForm.setValue({
-          nameworker: data.name,
-          lastnameworker: data.lastname,
-          idworker: data.idnumber,
-          addressworker: data.address,
-          emailworker: data.email,
+    this.id = this.idRoute.snapshot.paramMap.get("id");
+    setTimeout(() => {
+      if(this.id !== null){
+        this.modal_title = "Update Worker";
+        this.maintenanceSVC.getMaintenance(this.id).subscribe(data =>{
+          this.workerForm.setValue({
+            nameworker: data.name,
+            lastnameworker: data.lastname,
+            idworker: data.idnumber,
+            addressworker: data.address,
+            emailworker: data.email,
+          })
         })
-      })
-    }
+      }
+      setTimeout(() => {
+        this.getMaintenances();
+        this.workerForm.reset();
+      }, 2000);
   }, 200);
 	}
   triggerModal(){
